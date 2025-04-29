@@ -29,12 +29,8 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete('restrict');
             
-            $table->foreignId('crut_id')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('restrict');
-
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

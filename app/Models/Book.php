@@ -14,8 +14,5 @@ class Book extends Model
     }
     public function publishers(): BelongsTo{
         return $this->belongsTo(Publisher::class);
-    }
-    public function cruts(): BelongsTo {
-        return $this->belongsTo(Crut::class);
-    }    
+    }  
 }

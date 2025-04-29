@@ -1,0 +1,168 @@
+Project membuat crud buku
+
+pertama membuat file model, migration, dan controller
+cara cepat membuatnya yaitu
+php artisan make:model Category -mc --resource
+phpr make:model Publisher -mc --resource
+phpar make:model Books -mc --resource
+
+setelah itu konfigurasi isi file migrasinya
+
+terutama di file books nya dulu jadi di dalam table books itu memiliki relasi dengan table category dan table publisher
+$table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('restrict');
+
+lalu beresin file model nya
+
+mulai dari model category
+mempunyai relasi yaitu
+
+public function books(): HasMany{
+return $this->hasMany(Book::class)
+};
+
+sama seperti file model category, file model publisher juga diberesin
+
+public function books(): HasMany{
+return $this->hasMany(Book::class)
+};
+
+lalu beresin isi model Booknya sendiri yang berisi
+ini categories merujuk pada nama table nya
+public function categories(): BelongsTo{
+return $this->belongsTo(Category::class)
+}
+
+public function publishers(): BelongsTo{
+return $this->belongsTo(Publishers::class)
+}
+
+jangan lupa beresin urutan nama file table nya, nama table books harus terakhir kalau ngga nanti error
+
+
+Oh iya, beresin routes nya juga
+
+jadi kita akan bikin
+
+Route::resource('category', CategoryController::class);
+menyesuaikan dengan controller masing-masing file 
+
+===========================================================================
+1. setelah itu kita beralih ke controller penerbit
+di dalam method index kita bikin variable $allCategory = Category::all()
+untuk mendapatkan semua data Category yang ada di dalam Model
+
+2. Lalu kita return view('category.index', compact('allCategory'));
+allCategory diambil dari $allCategory karena compact itu membuat variable menjadi array, khususnya associative array
+
+3. lalu kita beralih ke method store
+yang berisi 
+
+awalnya kita membuat validasi dulu untuk Category ini yaitu
+public function store(Request $request){
+$validateData = $request->validate([
+'category_name' => 'required|max:100']);
+
+// Lalu kita menyimpan datanya
+kita ambil $validateData yang diatas
+Category::create($validateData);
+
+// Lalu kita redirect 
+return redirect()->route('category.index');
+
+===========================================================================
+4. lanjut ke show, yaitu menampilkan detail data
+
+lalu kita kirim shownya
+
+public function show(Category $category){
+return view('category.show', compact('category'));
+}
+
+===========================================================================
+5. next kita ke bagian method edit
+ya samasih kita akan menampilkan form juga tapikan buat ngedit gitu.
+
+public function edit(Category $category){
+// menggunakan compact itu untuk mengubah variable biasa menjadi array associaticereturn view('category.edit', compact('category');
+
+===========================================================================
+6. Lanjut ke update mirip dengan isi dari method store cuma ngubah model category menjadi $category
+
+public function update(Request $request, Category $category){
+// Make validate
+$validateData = $request->validate([
+'category_name' => 'required|100',
+]);
+
+// Update Data
+$category->update($validateData);
+
+// Redirect 
+return redirect()->route('category.index');
+}
+
+
+===========================================================================
+Lanjut ke bagian styling, pertama kita bikin folder di view dengan nama folder Category yang berisi index.blade.php
+yang berisi 
+
+<div class="container">
+<h1>Manajemen Buku</h1>
+<nav class="nav">
+<ul>
+	<li>
+		<a href="/category">Category</a>
+	</li>
+	<li>
+		<a href="/publisher">Publisher</a>
+	</li>
+	<li>
+		<a href="/book">Book</a>
+	</li>
+</ul>
+</nav>
+<h3>Category</h3>
+ <a href="{{ route('category.create') }}" class="button">Add</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Category Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($allCategory as $key => $r)
+                <tr>
+                    <td>{{ $key + 1 }}</td>
+                    <td>{{ $key->category_name }}</td>
+                </tr>
+                    
+                @endforeach
+            </tbody>
+        </table>
+        <div class="footer">&copy; 2025 Baji ajalah</div>
+</div>
+
+itu di file index.blade.php
+
+===========================================================================
+sekarang lanjut ke berikutnya
+
+kita pecah bagiannya 
+setelah itu kita bikin create.blade.php
+dengan isi mirip seperti index.blade.php tetapi beda nya ngga ada tabelnya
+
+==========================================================================
+kalau method store itu tidak perlu return view karena itu untuk logic memproses simpan data
+
+
+
+==========================================================================
+
+untuk edit.blade.php ada perubahan 
+yaitu di bagian @method('PUT')
+lalu inputnya dikasih value="{{$category->category_name}}"
+dan tombolnya diganti jadi update
+
+lalu kalau di form edit itu ada action="{{route('category.update', $category->id)}} jadituh mengirimkan id
