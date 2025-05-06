@@ -12,7 +12,8 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        return "INI adalah publisher controler :D";
+        $allPublisher = Publisher::all();
+        return view('publisher.index', compact('allPublisher'));
     }
 
     /**
@@ -20,7 +21,7 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        //
+        return view('publisher.create');
     }
 
     /**
@@ -28,7 +29,16 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Make validation
+        $validatedData = $request->validate([
+            'publisher_name' => 'required|max:100',
+        ]);
+
+        // Save data
+        Publisher::create($validatedData);
+
+        // Redirect
+        return redirect()->route('publisher.index');
     }
 
     /**
@@ -36,7 +46,7 @@ class PublisherController extends Controller
      */
     public function show(Publisher $publisher)
     {
-        //
+        return view('publisher.show', compact('publisher'));
     }
 
     /**
@@ -44,7 +54,7 @@ class PublisherController extends Controller
      */
     public function edit(Publisher $publisher)
     {
-        //
+        return view('publisher.edit', compact('publisher'));
     }
 
     /**
@@ -52,7 +62,16 @@ class PublisherController extends Controller
      */
     public function update(Request $request, Publisher $publisher)
     {
-        //
+        // Make validation
+        $validatedData = $request->validate([
+            'publisher_name' => 'required|max:100',
+        ]);
+
+        // Update data
+        $publisher->update($validatedData);
+
+        // Redirect
+        return redirect()->route('publisher.index');
     }
 
     /**
@@ -60,6 +79,7 @@ class PublisherController extends Controller
      */
     public function destroy(Publisher $publisher)
     {
-        //
+        $publisher->delete();
+        return redirect()->route('publisher.index');
     }
 }

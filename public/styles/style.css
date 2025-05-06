@@ -161,3 +161,22 @@ tbody tr:hover {
   font-size: 75%;
   font-style: italic;
 }
+
+.font-bold{
+  font-weight: bold;
+}
+.text-center{
+  text-align: center;
+}
+
+.px-10{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.py-10{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.block{
+  display: block;
+}

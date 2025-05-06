@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('book_code')->unique();
             $table->string('title', 70);
             $table->string('author');
+            $table->decimal('book_price', 10,2);
             $table->year('publication_year');
-            $table->decimal('book_price',10,2);
             
             $table->foreignId('category_id')
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('restrict');
+
 
             $table->foreignId('publisher_id')
             ->constrained()
