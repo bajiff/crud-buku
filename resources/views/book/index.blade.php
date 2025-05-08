@@ -26,8 +26,8 @@
                     <td>{{ $r->publishers->publisher_name }}</td>
                     <td width="190px">
                         <form action="{{ route('book.destroy', $r->id) }}" method="POST">
-                            <a href="{{ route('book.show',$r->id) }}" class="button">Detail</a>
-                            <a href="{{ route('book.edit',$r->id) }}" class="button">Edit</a>
+                            <a href="{{ route('book.show',$r->id) }}" class="button-orange">Detail</a>
+                            <a href="{{ route('book.edit',$r->id) }}" class="button-green">Edit</a>
                             @csrf
                             @method('DELETE')
                             <button  type="submit" class="button">Delete</button>

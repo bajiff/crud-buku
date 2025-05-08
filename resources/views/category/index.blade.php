@@ -16,8 +16,8 @@
                     <td>{{ $r->category_name }}</td>
                     <td>
                         <form action="{{ route('category.destroy', $r->id) }}" method="POST">
-                            <a href="{{ route('category.show',$r->id) }}" class="button">Detail</a>
-                            <a href="{{ route('category.edit',$r->id) }}" class="button">Edit</a>
+                            <a href="{{ route('category.show',$r->id) }}" class="button-orange">Detail</a>
+                            <a href="{{ route('category.edit',$r->id) }}" class="button-green">Edit</a>
                             @csrf
                             @method('DELETE')
                             <button  type="submit" class="button">Delete</button>

@@ -69,12 +69,12 @@ body {
   font-weight: bold;
   padding: 8px 16px;
   border-radius: 5px;
-  background-color: #34495e;
+  background-color: red;
   transition: background-color 0.3s;
 }
 
 .nav ul li a:hover {
-  background-color: #555;
+  background-color: #c50000;
   /* Darker blue for hover */
   color: #fff;
 }
@@ -112,7 +112,27 @@ select {
 
 
 .button {
-  background-color: #34495e;
+  background-color: red;
+  color: #fff;
+  padding: 6px 6px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+.button-green {
+  background-color: green;
+  color: #fff;
+  padding: 6px 6px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: none;
+}
+.button-orange {
+  background-color: orange;
   color: #fff;
   padding: 6px 6px;
   border: none;
@@ -124,6 +144,12 @@ select {
 
 .button:hover {
   background-color: #555;
+}
+.button-green:hover{
+  background-color: #005b00;
+}
+.button-orange:hover{
+  background-color: #7d5100;
 }
 
 /* Table Styling */
